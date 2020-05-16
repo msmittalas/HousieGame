@@ -16,8 +16,9 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-5 center">
-<form action="">
-Email: <input type="email" name="email" />
+<form action="/game/creategame" method="POST">
+Email: <input type="email" name="emailId" /><br/><br/>
+Target: <input type="text" name="target" /><br/><br/>
 <input type="submit" value="Create Game" />
 </form>
 </div>
@@ -25,8 +26,8 @@ Email: <input type="email" name="email" />
  <h3>-OR-</h3>
 </div>
  <div class="col-sm-5 center">
-<form action="">
-GAME ID : <input type="text" name="gameid" value=""/> <br/><br/>
+<form action="/game/rejoinhost" method="POST">
+GAME ID : <input type="text" name="gameId" value=""/> <br/><br/>
 PASSCODE : <input type="text" name="passcode" value=""/> <br/><br/>
 
 <input type="submit" value="Re Join As Host" />

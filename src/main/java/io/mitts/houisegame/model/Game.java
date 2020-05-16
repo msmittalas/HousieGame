@@ -44,6 +44,7 @@ public class Game {
 	Set<Ticket> tickets;
 	String emailId;
  	Date createdAt;
+ 	String gameStatus;
  	@ElementCollection
  	Map<String,String> flags = new HashMap<String, String>();
  	

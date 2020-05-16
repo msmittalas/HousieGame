@@ -2,6 +2,8 @@ package io.mitts.houisegame.model;
 
 
 
+import java.util.Arrays;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -29,15 +31,30 @@ public class Ticket {
 	@ManyToOne
 	@JoinColumn(name="gameId")
 	Game game;
-	
-	String []row1;
-	String []row2;
-	String []row3;
+	Integer [] numbers;
 	
 	
 	@Override
 	public int hashCode() {
-		return 1;
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(numbers);
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Ticket other = (Ticket) obj;
+		if (!Arrays.equals(numbers, other.numbers))
+			return false;
+		return true;
 	}
 
 

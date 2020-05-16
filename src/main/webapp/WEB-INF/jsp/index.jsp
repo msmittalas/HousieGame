@@ -16,8 +16,11 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-5 center">
-<form action="">
-<input type="text" name="inviteurl" value="Enter Invite URL"/> <br/><br/>
+<form action="/game/joinplayer" method="POST">
+<input type="text" name="gameId" value="Enter GAME ID TO JOIN"/> <br/><br/>
+<input type="text" name="playerName" value="Enter NAME"/> <br/><br/>
+<input type="text" name="emailId" value="Enter EMAILD ID"/> <br/><br/>
+
 <input type="submit" value="Join the Game" />
 </form>
 </div>
@@ -25,7 +28,7 @@
  <h3>-OR-</h3>
 </div>
  <div class="col-sm-5 center">
-<form action="hostgame.html">
+<form action="/game/showhostgame">
 <input type="submit" value="Host Game/ Re Join As Host" />
 </form>
 </div>

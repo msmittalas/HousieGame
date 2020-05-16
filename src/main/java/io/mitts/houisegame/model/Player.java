@@ -22,7 +22,7 @@ public class Player {
 	@GeneratedValue
 	Integer playerId;
 	String playerName;
-	String invitecode;
+	String emailId;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "gameId")
 	Game game;

@@ -38,21 +38,20 @@ Backlog
 	  which he will use during re join if left the game accidently
 	  
 	   
-	1.2. Host can rejoin the game using game id and password provided initially 
-	1.3 if User clicks on New Game then Game will be created  and Game status will be moved to "Created"
-	1.3 If user clicks on rejoin  then  just redirected to Game  and Game status will not be changed
+	1.2. Host can rejoin the game using game id and passcode provided initially  ---- Done 
+	1.3 if User clicks on New Game then Game will be created  and Game status will be moved to "Created"  --- Done
+	1.3 If user clicks on rejoin  then  just redirected to Game  and Game status will not be changed     --- Done
 
 2 Game-board Page  actions  for Host
 
 	2.1.if Game status is "CREATED" Then  On  Gameboard page must have
 	 board with 1 to 99 numbers on it  and  
-	 "START GAME" , "Generate and Send invite" and "Create Target " button should be present 
-	
-		2.1.1. Host can generate a invite which contains ticket of for the player  and share that URL to  the players
+	 "START GAME" and "Create Target " button should be present 
+		2.1.1 Host can share game id number with PLayers 	
+		// NOT REQUIRED 2.1.1. Host can generate a invite which contains ticket of for the player  and share that URL to  the players
 		2.1.2 Host can create Target  , which will be visible during the game and Host can delete the Target
 		2.1.3  Host can invite a PLayer to join the game (Every Invite will have ticket ) using Generate and Send Invite Button and Ticket will be generated   
 		2.1.4 If Host clicks on Start Game then Game status will be move to STARTED state and baord will be assigned to this game 
-				
 	2.2 if Game status is "STARTED" then "PAUSE GAME" , "STOP GAME" , "NEXT NUMBER" and  "SHOW WINNER"  button will be displayed	
 		2.2.1 if Host clicks on Next Number then next number between 1 to 99 should be generated and get displayed on board (Not repeated)
 		2.2.2 if Host clicks on "Pause Game/ Stop Game" then Game status will be moved to Pause and Players will be notified 
@@ -62,8 +61,10 @@ Backlog
 	
 	2.4 Dashboard should also display Targets which were created by Host for this game 
 	
-3 Players can join the game based on the invite 
-   Invite link can be pasted on text box and can click the join game  and redirected to GameBaord Page
+3 Players can join the game based on the gameId 
+
+		Player provides der basic details like emailId  Name and can submit  , once submit 
+		ticket will be generated and will be assigned to that PLayer
    
 4 Gameboard Page actions for Player 
   4.1 Player can see his ticket 
