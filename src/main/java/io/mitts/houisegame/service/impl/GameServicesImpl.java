@@ -1,5 +1,8 @@
 package io.mitts.houisegame.service.impl;
 
+import java.util.Optional;
+import java.util.function.Consumer;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,7 +48,14 @@ public class GameServicesImpl implements GameServices {
 	@Override
 	public Game getGame(GameDTO dto) {
 		
-		return gameRepository.findById(dto.getGameId()).get();
+		Game game=null;
+		Optional<Game> dbOutputOpt= gameRepository.findById(dto.getGameId());
+		if(dbOutputOpt.isPresent())
+		{
+			game=dbOutputOpt.get();
+		}
+	
+		return game;
 	}
 
 	
