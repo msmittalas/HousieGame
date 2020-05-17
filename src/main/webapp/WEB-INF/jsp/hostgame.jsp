@@ -16,7 +16,8 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-5 center">
-<form action="/game/creategame" method="POST">
+<form action="/game/create" method="POST">
+Name : <input type="text" name="hostname" /><br/><br/>
 Email: <input type="email" name="emailId" /><br/><br/>
 Target: <input type="text" name="target" /><br/><br/>
 <input type="submit" value="Create Game" />
@@ -26,7 +27,7 @@ Target: <input type="text" name="target" /><br/><br/>
  <h3>-OR-</h3>
 </div>
  <div class="col-sm-5 center">
-<form action="/game/rejoinhost" method="POST">
+<form action="/host/rejoin" method="POST">
 GAME ID : <input type="text" name="gameId" value=""/> <br/><br/>
 PASSCODE : <input type="text" name="passcode" value=""/> <br/><br/>
 

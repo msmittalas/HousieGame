@@ -1,7 +1,9 @@
 package io.mitts.houisegame.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -16,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.criteria.CriteriaBuilder.In;
 
 import org.springframework.data.relational.core.mapping.MappedCollection;
 
@@ -38,13 +41,13 @@ public class Game {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="game", cascade = CascadeType.ALL)
 	List<Player> players;
 	String target;
-	@OneToOne(fetch = FetchType.EAGER,mappedBy = "game", cascade = CascadeType.ALL)
-	GameBoard board;
-	@OneToMany(fetch = FetchType.EAGER, mappedBy="game", cascade = CascadeType.ALL)
-	Set<Ticket> tickets;
+	@Column(length = 2000)
+	ArrayList<Integer> dashboardNumbers=new ArrayList<Integer>();
 	String emailId;
  	Date createdAt;
  	String gameStatus;
+ 	Integer nextNumber=0;
+ 	String hostname;
  	@ElementCollection
  	Map<String,String> flags = new HashMap<String, String>();
  	

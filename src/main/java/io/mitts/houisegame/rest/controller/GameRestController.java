@@ -31,7 +31,7 @@ public class GameRestController {
 		return  dto;
 	}
 	@GetMapping(path = "/{gameId}")
-	public @ResponseBody Game getGame(@PathVariable Integer gameId)
+	public @ResponseBody GameDTO getGame(@PathVariable Integer gameId)
 	{
 		GameDTO inputGameDTO=GameDTO.builder().gameId(gameId).build();
 		return  gameServices.getGame(inputGameDTO);

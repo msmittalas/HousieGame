@@ -2,9 +2,15 @@ package io.mitts.houisegame.model;
 
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -12,12 +18,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
+@Builder
 @AllArgsConstructor
 public class Ticket {
 	
@@ -25,23 +33,10 @@ public class Ticket {
 	@GeneratedValue
 	Integer ticketId;
 	
-	@OneToOne
-	@JoinColumn(name="playerId")
-	Player player;
-	@ManyToOne
-	@JoinColumn(name="gameId")
-	Game game;
-	Integer [] numbers;
 	
 	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Arrays.hashCode(numbers);
-		return result;
-	}
-
+	@Column(length = 2000)
+	ArrayList<Integer> numbers=new ArrayList<Integer>();
 
 	@Override
 	public boolean equals(Object obj) {
@@ -52,12 +47,21 @@ public class Ticket {
 		if (getClass() != obj.getClass())
 			return false;
 		Ticket other = (Ticket) obj;
-		if (!Arrays.equals(numbers, other.numbers))
+		if (numbers == null) {
+			if (other.numbers != null)
+				return false;
+		} else if (!numbers.equals(other.numbers))
 			return false;
 		return true;
 	}
 
-
+	@Override
+	public int hashCode() {
+		return 1;
+	}
+	
+	
+	
 
  
 
