@@ -15,6 +15,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -36,8 +37,6 @@ public class Game {
 	@Id
 	@GeneratedValue
 	Integer gameId;
-	@Column(unique = true)
-	String passcode;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="game", cascade = CascadeType.ALL)
 	List<Player> players;
 	String target;
@@ -47,7 +46,9 @@ public class Game {
  	Date createdAt;
  	String gameStatus;
  	Integer nextNumber=0;
- 	String hostname;
+ 	@OneToOne
+ 	@JoinColumn(name="playerId")
+ 	Player host;
  	@ElementCollection
  	Map<String,String> flags = new HashMap<String, String>();
  	

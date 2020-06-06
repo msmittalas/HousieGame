@@ -10,6 +10,8 @@ import io.mitts.houisegame.model.Player;
 public interface PlayerRepository extends CrudRepository<Player, Integer> {
 
 	public List<Player> findByGame(Game game);
+	public Player findByEmailIdAndGame(String emailId,Game game);
+	
 	
 }
 

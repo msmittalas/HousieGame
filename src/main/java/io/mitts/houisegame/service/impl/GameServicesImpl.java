@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import io.mitts.houisegame.HousieConstant;
 import io.mitts.houisegame.dto.GameDTO;
 import io.mitts.houisegame.model.Game;
+import io.mitts.houisegame.model.Player;
 import io.mitts.houisegame.repository.GameRepository;
+import io.mitts.houisegame.repository.PlayerRepository;
 import io.mitts.houisegame.service.GameServices;
 import io.mitts.houisegame.utils.GameDTOtoEntityMapper;
 import io.mitts.houisegame.utils.HouiseGameUtils;
@@ -23,14 +25,23 @@ public class GameServicesImpl implements GameServices {
 	GameRepository gameRepository;
 	@Autowired
 	HouiseGameUtils utils;
-
+	@Autowired
+	PlayerRepository playerRepo;
 	@Override
 	public GameDTO createGame(GameDTO inputGameDTO) {
 
 		Game game = GameDTOtoEntityMapper.converToGame(inputGameDTO);
-		game.setPasscode(utils.generatePasscode());
 		game.setGameStatus(HousieConstant.GAME_STATUS_CREATED);
 		game = createOrUpdate(game);
+		Player hostPlayer=Player.builder().emailId(inputGameDTO.getEmailId())
+		.game(game)
+		.isHost("true")
+		.passcode(""+System.currentTimeMillis())
+		.playerName(inputGameDTO.getHostname())
+		.build();
+		hostPlayer=playerRepo.save(hostPlayer);
+		game.setHost(hostPlayer);
+		createOrUpdate(game);
 		return GameDTOtoEntityMapper.converToDTO(game);
 	}
 
@@ -72,6 +83,19 @@ public class GameServicesImpl implements GameServices {
 		}
 
 		return newNumber;
+	}
+
+
+
+	@Override
+	public boolean changeGameStatus(GameDTO dto) {
+		Game game = gameRepository.findById(dto.getGameId()).get();
+		boolean UpdateFlag=false;
+		if (game != null) {
+			game.setGameStatus(dto.getGameStatus());
+			createOrUpdate(game);
+		}
+		return UpdateFlag;
 	}
 
 }

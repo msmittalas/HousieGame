@@ -14,8 +14,10 @@ import io.mitts.houisegame.model.Ticket;
 import io.mitts.houisegame.repository.GameRepository;
 import io.mitts.houisegame.repository.PlayerRepository;
 import io.mitts.houisegame.repository.TicketRepository;
+import io.mitts.houisegame.service.GameServices;
 import io.mitts.houisegame.service.PlayerService;
 import io.mitts.houisegame.service.TicketService;
+import io.mitts.houisegame.utils.PlayerDTOtoEntityMapper;
 @Service
 public class PlayerServiceImpl implements PlayerService {
 
@@ -28,12 +30,18 @@ public class PlayerServiceImpl implements PlayerService {
 	GameRepository gameRepo;
 	@Autowired
 	TicketService ticketService;
+
 	
 	@Override
 	public PlayerDTO createPlayer(PlayerDTO dto) {
-		//TODO  check for null
 		Game game=gameRepo.findById(dto.getGameId()).get();
-		Player player=Player.builder().emailId(dto.getEmailId()).game(game).playerName(dto.getPlayerName()).build();
+		Player player=Player.builder()
+		.emailId(dto.getEmailId())
+		.game(game)
+		.playerName(dto.getPlayerName())
+		.passcode(dto.getPasscode())
+		.isHost(dto.getIsHost())
+		.build();
 		player=playerRepo.save(player);
 		Set<Ticket> tickets=extractTicketsFromPlayerList(playerRepo.findByGame(game));
 		Ticket newTicket=ticketService.generateTicket(tickets);
@@ -62,14 +70,13 @@ public class PlayerServiceImpl implements PlayerService {
 	
 	@Override
 	public PlayerDTO updatePlayer(PlayerDTO dto) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Player getPlayer(PlayerDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
+	public PlayerDTO getPlayer(PlayerDTO dto) {
+		Player player=playerRepo.findByEmailIdAndGame(dto.getEmailId(),gameRepo.findById(dto.getGameId()).get());
+		return PlayerDTOtoEntityMapper.convertToDTO(player);
 	}
 
 }

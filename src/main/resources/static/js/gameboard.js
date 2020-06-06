@@ -1,5 +1,5 @@
 var tik=null;
-	function getGame(id)
+	function getGame(id,isGamelobby)
 	{
 		$.get("/game/get?gameId="+id, function(data, status){
 			if(status != "success")
@@ -16,24 +16,57 @@ var tik=null;
 					$("#"+id).animate({opacity: '1.0'});
 				}
 			 }
+		 $("#gameDetails").html("");
+		 $("#gameDetails").append("<li>Game Id:"+data.gameId+"</li>");
+		 $("#gameDetails").append("<li>Game Status:"+data.gameStatus+"</li>");
+		 $("#gameDetails").append("<li>Game Prize:"+data.target+"</li>");
+			
 		 if(data.players!=null)
 		 {
 			 var playersoutput="";
-			 playersoutput=playersoutput+"<li class='list-group-item'>"+data.hostname+" (HOST)</li>";
 			 for(i=0;i<data.players.length;i++)
 			{
-				 playersoutput=playersoutput+"<li class='list-group-item'>"+data.players[i].playerName+"</li>";
-				
+				 var player=data.players[i];
+				 if(player.isHost==="true")
+				{
+					 playersoutput=playersoutput+"<li class='list-group-item'>"+player.playerName+"(HOST)</li>";
+					 	 
+				}	
+				 else{
+				 playersoutput=playersoutput+"<li class='list-group-item'>"+player.playerName+"</li>";
+				 }
 			}
-			 playersoutput=playersoutput;
-			 $("#totalPlayers").html(playersoutput);
+			$("#totalPlayers").html(playersoutput);
 		 }
+		 if(data.gameStatus==="STARTED"){
+		 var nextVal=$("#nextvalue").html();
+		 if(nextVal=== null ||   nextVal!=data.nextNumber)
+			 {
 		  $("#nextvalue").fadeOut();
 			$("#nextvalue").fadeIn("slow");
+			$("#nextvalue").fadeOut();
+			$("#nextvalue").fadeIn("slow");
 			$("#nextvalue").html(data.nextNumber);
+			 }
 			displayTicket(tik,data.dashboardNumbers);
+		 }
+		 else if(data.gameStatus==="CREATED")
+		 {
+			 $("#nextvalue").html("WAITING FOR PLAYERS....");
+			 $("#generate").hide();
+			 $("#FinishGame").hide();
+		}
+		 else if(data.gameStatus==="FINISHED")
+		{
+			 $("#nextvalue").html("GAME FINISHED");
+			 $("#generate").hide();
+			 $("#FinishGame").hide();
+			 $("#startGame").hide();
+		}
 	    });
 	}
+	
+	
 	function generateNextNumber(id)
 	{
 		$.get("/game/generateNext?gameId="+id, function(data, status){
@@ -62,6 +95,16 @@ var tik=null;
 		
 	}
 	
+	function changeGameStatus(id,gameStatus)
+	{
+		$.get("/game/changeStatus?gameId="+id+"&gameStatus="+gameStatus, function(data, status){
+		getGame(id);
+		
+	});
+	}
+
+	
+	
 	function getPlayer()
 	{
 		var playerDetails=null;
@@ -80,6 +123,10 @@ var tik=null;
 
 	function displayTicket(ticket,dashboard)
 	{
+		if(ticket==null || ticket.numbers==null)
+			{
+			return ;
+			}
 		tik=ticket;
 		var numbers=ticket.numbers;
 		var displayOutput="<h3 class='text-center'>Your Ticket</h3><table class='table table-bordered'><tr>";

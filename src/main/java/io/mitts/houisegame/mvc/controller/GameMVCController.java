@@ -3,26 +3,19 @@ package io.mitts.houisegame.mvc.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.mitts.houisegame.dto.GameDTO;
 import io.mitts.houisegame.dto.PlayerDTO;
-import io.mitts.houisegame.model.Game;
-import io.mitts.houisegame.model.Player;
 import io.mitts.houisegame.service.GameServices;
 import io.mitts.houisegame.service.PlayerService;
+import static io.mitts.houisegame.HousieConstant.*;
 
 @Controller
 @RequestMapping("/game")
@@ -41,9 +34,8 @@ public class GameMVCController {
 	{
 		dto=gameService.createGame(dto);
 		session.setAttribute("gameId", dto.getGameId());
-		PlayerDTO playerDTO=PlayerDTO.builder().isHost("true").gameId(dto.getGameId()).playerName(dto.getHostname()).passcode(dto.getPasscode()).build();
 		session.setAttribute("isHost"+ dto.getGameId(), "true");
-		session.setAttribute("playerDetails", playerDTO);
+		session.setAttribute("playerDetails", dto.getHostPlayer());
 		return "redirect:/game/showgameboard";
 	}
 	
@@ -79,22 +71,66 @@ public class GameMVCController {
 	@PostMapping("/joinplayer")
 	public String createPlayer(PlayerDTO dto,HttpSession session)
 	{
-		dto=playerService.createPlayer(dto);
-		dto.setIsHost("false");
-		session.setAttribute("gameId", dto.getGameId());
-		session.setAttribute("playerDetails", dto);
-		
-		return "redirect:/game/showgameboard";
+		GameDTO gameDto=gameService.getGame(GameDTO.builder().gameId(dto.getGameId()).build());
+		String redirectURL="redirect:/";
+		if(gameDto!=null && gameDto.getGameStatus()!=null && gameDto.getGameStatus().equals(GAME_STATUS_CREATED))
+		{
+			dto.setIsHost("false");
+			dto=playerService.createPlayer(dto);
+			session.setAttribute("gameId", dto.getGameId());
+			session.setAttribute("playerDetails", dto);
+			redirectURL="redirect:/game/showgameboard";
+		}
+		return redirectURL;
 	}
-	
-	@GetMapping("/generateNext")
-	public ResponseEntity<Integer> generateNext(@RequestParam Integer gameId)
+	@PostMapping("/rejoinplayer")
+	public String reJoinPlayer(PlayerDTO dto,HttpSession session)
 	{
+		String redirectURL="/";
+		dto=playerService.getPlayer(dto);
+		if(dto!=null)
+		{	
+			GameDTO gameDto=gameService.getGame(GameDTO.builder().gameId(dto.getGameId()).build());
+			if(gameDto!=null && gameDto.getGameStatus()!=null && gameDto.getGameStatus().equals(GAME_STATUS_CREATED))
+			{	
+			session.setAttribute("gameId", dto.getGameId());
+			session.setAttribute("playerDetails", dto);
+			redirectURL="redirect:/game/showgameboard";
+			}
+		}
+		return redirectURL;
+	}
+	@GetMapping("/generateNext")
+	public ResponseEntity<Integer> generateNext(@RequestParam Integer gameId,HttpSession session)
+	{
+		ResponseEntity<Integer> responseEntity=ResponseEntity.badRequest().build();
+		  if(session.getAttribute("isHost"+gameId)!=null)
+	   	   {
 		 GameDTO dto=GameDTO.builder().gameId(gameId).build();
 		 Integer nextNumber=gameService.generateNextNumber(dto);
-		 
-		 return ResponseEntity.ok(nextNumber);
+		 responseEntity=ResponseEntity.ok(nextNumber);
+	   	   }
+		 return responseEntity;
 	}
+	
+	@GetMapping("/changeStatus")
+	public ResponseEntity<String> changeGameStatus(@RequestParam Integer gameId,@RequestParam String gameStatus,HttpSession session)
+	{
+		ResponseEntity<String> responseEntity=ResponseEntity.badRequest().build();
+		  if(session.getAttribute("isHost"+gameId)!=null)
+   	   {
+		 GameDTO dto=GameDTO.builder().gameId(gameId).gameStatus(gameStatus).build();
+		 if(gameService.changeGameStatus(dto)) 
+		 {
+			 responseEntity=ResponseEntity.ok().build();
+		 }
+   	   }
+		return responseEntity;
+		
+	}
+	
+	
+	
 	@GetMapping("/playerDetails")
 	public ResponseEntity<PlayerDTO> getPlayer(HttpSession session)
 	{

@@ -34,4 +34,5 @@ public class GameDTO {
  	Integer nextNumber;
  	String gameStatus;
 	ArrayList<Integer> dashboardNumbers=new ArrayList<Integer>();
+	PlayerDTO hostPlayer;
 }

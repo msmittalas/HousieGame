@@ -7,6 +7,6 @@ public interface PlayerService {
 
 	public PlayerDTO createPlayer(PlayerDTO dto);
 	public PlayerDTO updatePlayer(PlayerDTO dto);
-	public Player getPlayer(PlayerDTO dto);
+	public PlayerDTO getPlayer(PlayerDTO dto);
 	
 }

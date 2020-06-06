@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -35,5 +36,8 @@ public class Player {
 	Game game;
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	Ticket ticket;
+	@Column(unique = true)
+	String passcode;
+	String isHost;
 
 }

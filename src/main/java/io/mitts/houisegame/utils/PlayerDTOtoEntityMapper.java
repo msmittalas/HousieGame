@@ -42,6 +42,12 @@ public class PlayerDTOtoEntityMapper {
 			if(player.getTicket()!=null)
 			playerDTO.setTicket(player.getTicket());
 			
+			if(player.getIsHost()!=null)
+			playerDTO.setIsHost(player.getIsHost());
+			
+			if(player.getPasscode()!=null)
+			playerDTO.setPasscode(player.getPasscode());	
+			
 		}
 		
 		return playerDTO;

@@ -9,29 +9,87 @@
 
 </head>
 <body>
-<div class="jumbotron text-center">
-<h1> Welcome To Housie World </h1><br/><br/>
+<div class="text-center">
+<h1> Welcome To Housie World </h1>
 </div>
 
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" href="/">HOME</a>
 
-<div class="container">
+  <!-- Links -->
+  <ul class="navbar-nav">
+   
+    <!-- Dropdown -->
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+       Re-Join Game As
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">Player</a>
+        <a class="dropdown-item" href="/host/showhostgame">Host</a>
+      </div>
+    </li>
+     <li class="nav-item">
+      <a class="nav-link" >Upcoming Features</a>
+    </li>
+    
+  </ul>
+</nav>
+<br>
+
+<div class="container-fluid">
   <div class="row">
-    <div class="col-sm-5 center">
-<form action="/game/joinplayer" method="POST">
-<input type="text" name="gameId" value="Enter GAME ID TO JOIN"/> <br/><br/>
-<input type="text" name="playerName" value="Enter NAME"/> <br/><br/>
-<input type="text" name="emailId" value="Enter EMAILD ID"/> <br/><br/>
+    <div class="col-lg-5 center">
+    
+  
+  <div id="joinplayerform" >  
+  <form action="/game/joinplayer" method="POST">
+    <div class="form-group">
+      <label for="gameId">Game ID:</label>
+      <input type="text" class="form-control" id="playerName" placeholder="Enter Game Id" name="gameId">
+    </div>
+  
+    <div class="form-group">
+      <label for="emailId">Your Email:</label>
+      <input type="email" class="form-control" id="email" placeholder="Enter email" name="emailId">
+    </div>
+    <div class="form-group">
+      <label for="playerName">Your Name</label>
+      <input type="text" class="form-control" id="playerName" placeholder="Enter Your Name" name="playerName">
+    </div>
+  
+    <button type="submit" class="btn btn-info " role="button">Join Game</button>
+  </form>
+</div>
+</div>
+ <div class="col-lg-2 center">
+ <h3 class="text-center">-OR-</h3>
+</div>
+ <div class="col-lg-5 center">
+    
+  
+  <div id="hostgameform" >  
+ 
+<form action="/game/create" method="POST">
+ <div class="form-group">
+      <label for="emailId">Your Email:</label>
+      <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+    </div>
+    <div class="form-group">
+      <label for="hostname">Your Name</label>
+      <input type="text" class="form-control" id="hostname" placeholder="Enter Your Name" name="hostname">
+    </div>
+    <div class="form-group">
+      <label for="target">Winning Target:</label>
+      <input type="text" class="form-control" id="target" placeholder="Enter Target" name="target">
+    </div>
+  
 
-<input type="submit" value="Join the Game" />
+    <button type="submit" class="btn btn-info">Host Game</button>
+
 </form>
 </div>
- <div class="col-sm-2 center">
- <h3>-OR-</h3>
-</div>
- <div class="col-sm-5 center">
-<form action="/host/showhostgame">
-<input type="submit" value="Host Game/ Re Join As Host" />
-</form>
 </div>
 </div>
 </div>

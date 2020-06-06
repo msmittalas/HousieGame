@@ -12,5 +12,7 @@ public interface GameServices {
 	public GameDTO getGame(GameDTO dto);
 	
 	public Integer generateNextNumber(GameDTO dto);
+	
+	public boolean changeGameStatus(GameDTO dto);
 
 }

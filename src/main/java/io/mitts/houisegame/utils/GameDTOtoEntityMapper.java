@@ -30,20 +30,17 @@ public class GameDTOtoEntityMapper {
 			if(game.getGameStatus()!=null)
 			gameDTO.setGameStatus(game.getGameStatus());
 			
-			if(game.getHostname()!=null)
-			gameDTO.setHostname(game.getHostname());
 			
 			if(game.getNextNumber()!=null)
 			gameDTO.setNextNumber(game.getNextNumber());
-			
-			if(game.getPasscode()!=null)
-			gameDTO.setPasscode(game.getPasscode());
 			
 			if(game.getPlayers()!=null)
 			gameDTO.setPlayers(PlayerDTOtoEntityMapper.convertToDTOs(game.getPlayers()));
 			
 			if(game.getTarget()!=null)
 			gameDTO.setTarget(game.getTarget());
+			if(game.getHost()!=null)
+			gameDTO.setHostPlayer(PlayerDTOtoEntityMapper.convertToDTO(game.getHost()));
 		}	
 		
 		return gameDTO;
@@ -71,14 +68,9 @@ public class GameDTOtoEntityMapper {
 			if(gameDTO.getGameStatus()!=null)
 			game.setGameStatus(gameDTO.getGameStatus());
 			
-			if(gameDTO.getHostname()!=null)
-			game.setHostname(gameDTO.getHostname());
 			
 			if(gameDTO.getNextNumber()!=null)
 			game.setNextNumber(gameDTO.getNextNumber());
-			
-			if(gameDTO.getPasscode()!=null)
-			game.setPasscode(gameDTO.getPasscode());
 			
 				
 			if(gameDTO.getTarget()!=null)

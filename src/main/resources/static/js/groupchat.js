@@ -4,7 +4,7 @@ function connectToChat(grpid) {
 	mymusic=document.createElement('audio');
 	mymusic.setAttribute('src', '../sound/juntos.mp3');
 
-    var socket = new SockJS('http://192.168.10.215:8090/ysmchatendpoint');
+    var socket = new SockJS('/ysmchatendpoint');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         //setConnected(true);

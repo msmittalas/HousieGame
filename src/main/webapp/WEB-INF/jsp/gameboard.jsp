@@ -15,19 +15,25 @@
 <script src="../webjars/stomp-websocket/stomp.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		var player=getPlayer();
-		if(player!=null && player.ticket!=null)
-		{
-			displayTicket(player.ticket);
-			$("#generate").hide();
-		}
-		else
-		{
-			$("#playerTicket").hide();
-		}
+	
 		generateGameBoard();
 		var id = ${sessionScope.gameId};
 		getGame(id);
+		var player=getPlayer();
+		if(player.ticket!=null)
+		{
+			$("#playerDetails").append("<li>Player Email:"+player.emailId+"</li>");		
+			$("#playerDetails").append("<li>Player Name:"+player.playerName+"</li>");
+			displayTicket(player.ticket);
+			$("#generate").hide();
+			$("#startGame").hide();
+		 	$("#FinishGame").hide();
+		}
+		else
+		{	
+			$("#playerTicket").hide();
+			
+		}
 		connectToChat(id);
 		$("#generate").click(function() {
 			generateNextNumber(id);
@@ -36,6 +42,18 @@
 				{
 			sendMessage(id,player.playerName,$("#message").val());
 				});
+		$("#startGame").click(function() {
+			$("#startGame").hide();
+			$("#generate").show();
+		 	$("#FinishGame").show();
+			changeGameStatus(id,"STARTED");
+		});
+		$("#FinishGame").click(function() {
+			$("#generate").hide();
+			$("#startGame").hide();
+		 	$("#FinishGame").hide();
+			changeGameStatus(id,"FINISHED");
+		});
 		
 		setInterval(function() {
 			getGame(id); 
@@ -54,20 +72,41 @@
 </head>
 <body>
 	<div class="container-fluid">
+		<div class="row">
+		<div class="col-lg-12">
+		 <div id="accordion">
+    <div class="card">
+      <div class="card-header">
+        <a class="card-link" data-toggle="collapse" href="#collapseOne">
+         <h5>Game Details</h5>
+        </a>
+      </div>
+      <div id="collapseOne" class="collapse show" data-parent="#accordion">
+        <div class="card-body">
+        <div> <ul id="gameDetails"></ul></div>
+        <div> <ul id="playerDetails"></ul></div>
+        
+        </div>
+      </div>
+    </div>
+    </div>
 		
+		
+		</div>
+		</div>
 		<div class="row">
 		 	<div class="col-lg-2 ">
 		 	<h4 class="text-center">Players</h4>
 		 	<ul id="totalPlayers" class="list-group"></ul>
 		 	</div>
 			<div class="col-lg-8">
-			<h1 class="text-center">Gameboard</h1>
-			<div class="row">
-				<div  class="col-lg-12" id="gameboard"></div>
-			</div>
 			<div class="row">
 				<div  class="col-lg-12" id="playerTicket">
-				
+			</div>
+			</div>
+			<div class="row">
+				<h1 class="text-center" id="">Gameboard</h1>
+				<div  class="col-lg-12" id="gameboard">
 				</div>
 			</div>
 				
@@ -79,15 +118,17 @@
 
 						<h4 id="nextvalue" class="card-title text-center"></h4>
 					</div>
-					<a id="generate" href="#" class="btn btn-info " role="button">Generate</a>
-
+					<button id="generate"  class="btn btn-info " role="button" >Generate</button>
+					<button id="startGame"  class="btn btn-info " role="button">Start Game</button>
+					<button id="FinishGame"  class="btn btn-info " role="button">Finish Game</button>
+					
 				</div>
 				<div class="card mt-3 mb-3">
 					<h4 class="text-center">Chat With Friends</h4>
 					<div class="card-body">
 						<div class="scroll">
 						<ul id="groupchatul">
-						   <li>Mittal : HI</li>
+						   
 						</ul>
 						</div>
 					</div>
@@ -95,7 +136,7 @@
 						<input type="text"
 							class="form-control " id="message" placeholder="Enter Message"
 							name="message">
-						<a class="form-control btn btn-info"  href="#"  role="button" id="sendMsgbtn">Send</a>
+						<a class="form-control btn btn-info"  role="button" id="sendMsgbtn">Send</a>
 					</form>
 				</div>
 			</div>
