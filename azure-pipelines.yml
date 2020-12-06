@@ -43,5 +43,5 @@ stages:
         containerRegistry: 'ysmmsmittcontaineracr'
         repository: 'appContainer'
         command: 'buildAndPush'
-        Dockerfile: '$Agent.BuildDirectory)/s/Dockerfile'
+        Dockerfile: '$(Agent.BuildDirectory)/s/Dockerfile'
         buildContext: '$(Agent.BuildDirectory)/s'
