@@ -8,4 +8,5 @@ WORKDIR /opt/app
 COPY target/app.jar app.jar
 
 # java -jar /opt/app/app.jar
+EXPOSE 80
 ENTRYPOINT ["java","-jar","app.jar"]
