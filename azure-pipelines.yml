@@ -38,10 +38,10 @@ stages:
         mavenAuthenticateFeed: false
         effectivePomSkip: false
         sonarQubeRunAnalysis: false
-- task: Docker@2
-  inputs:
-    containerRegistry: 'ysmmsmittcontaineracr'
-    repository: 'appContainer'
-    command: 'buildAndPush'
-    Dockerfile: '$Agent.BuildDirectory)/s/Dockerfile'
-    buildContext: '$(Agent.BuildDirectory)/s'
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'ysmmsmittcontaineracr'
+        repository: 'appContainer'
+        command: 'buildAndPush'
+        Dockerfile: '$Agent.BuildDirectory)/s/Dockerfile'
+        buildContext: '$(Agent.BuildDirectory)/s'
