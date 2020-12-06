@@ -38,13 +38,10 @@ stages:
         mavenAuthenticateFeed: false
         effectivePomSkip: false
         sonarQubeRunAnalysis: false
-    - task: Docker@2
-      displayName: Build and push an image to container registry
-      inputs:
-        command: buildAndPush
-        repository: $(imageRepository)
-        Dockerfile: '$(Agent.BuildDirectory)/s/Dockerfile'
-        buildContext: '$(Agent.BuildDirectory)/s/target/'
-        containerRegistry: $(dockerRegistryServiceConnection)
-        tags: |
-          $(tag)
+- task: Docker@2
+  inputs:
+    containerRegistry: 'ysmmsmittcontaineracr'
+    repository: 'appContainer'
+    command: 'buildAndPush'
+    Dockerfile: '$Agent.BuildDirectory)/s/Dockerfile'
+    buildContext: '$(Agent.BuildDirectory)/s'
