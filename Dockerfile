@@ -5,7 +5,7 @@ FROM adoptopenjdk/openjdk11:alpine-jre
 WORKDIR /opt/app
 
 #cp target/app.jar /opt/app/app.jar
-COPY /home/vsts/work/1/s/target/app.jar app.jar
+COPY target/app.jar app.jar
 
 # java -jar /opt/app/app.jar
 ENTRYPOINT ["java","-jar","app.jar"]
