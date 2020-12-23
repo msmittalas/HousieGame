@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>io.mitts</groupId>
+    <artifactId>HousieGame</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>housiegame-web</artifactId>
+  <name>housiegame-web</name>
+ 	<properties>
+		<spring-boot.repackage.skip>true</spring-boot.repackage.skip>
+	</properties>
+  <dependencies>
+      <dependency>
+      	<groupId>io.mitts</groupId>
+      	<artifactId>housiegame-service</artifactId>
+      	<version>${project.version}</version>
+      </dependency>
+  </dependencies>
+</project>
