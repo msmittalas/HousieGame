@@ -15,8 +15,6 @@ import io.mitts.houisegame.dto.GameDTO;
 import io.mitts.houisegame.model.Game;
 import io.mitts.houisegame.service.GameServices;
 
-@Controller
-@RequestMapping("/rest/games")
 public class GameRestController {
 
 	

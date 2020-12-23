@@ -1,15 +1,16 @@
 package io.mitts.houisegame.mvc.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@RestController("/")
+@Controller
+@RequestMapping("/")
 public class HomeMVCController {
 
 	@GetMapping
-	public ModelAndView home()
+	public String home()
 	{
-		 return  new ModelAndView("index");
+		 return  ("index");
 	}
 }

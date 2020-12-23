@@ -1,10 +1,5 @@
 
-<%
-	if (session.getAttribute("gameId") == null) {
-		response.sendRedirect("/");
-	}
-%>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <link rel="stylesheet" href="../css/gameboard.css" />
 <script
@@ -17,7 +12,7 @@
 	$(document).ready(function() {
 	
 		generateGameBoard();
-		var id = ${sessionScope.gameId};
+		var id =[[${gameId}]];
 		getGame(id);
 		var player=getPlayer();
 		if(player.ticket!=null)
