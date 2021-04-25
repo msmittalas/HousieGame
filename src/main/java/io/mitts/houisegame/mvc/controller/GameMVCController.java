@@ -42,6 +42,7 @@ public class GameMVCController {
 		model.addAttribute("isHost"+ dto.getGameId(), "true");
 		model.addAttribute("playerDetails", dto.getHostPlayer());
 		session.setAttribute("playerDetails", dto.getHostPlayer());
+		session.setAttribute("isHost"+ dto.getGameId(), "true");
 		return "gameboard";
 	}
 	
